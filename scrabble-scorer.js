@@ -32,28 +32,116 @@ function oldScrabbleScorer(word) {
 // your job is to finish writing these functions and variables that we've named //
 // don't change the names or your program won't work as expected. //
 
+
 function initialPrompt() {
-   console.log("Let's play some scrabble! Enter a word:");
+   let word = input.question("Let's play some scrabble! Enter a word: ");
+   return word;
 };
+
+//Testing oldScrabbleScorer ++
+/* console.log(oldScrabbleScorer(initialPrompt())) */
 
 let newPointStructure;
 
-let simpleScorer;
+let simpleScorer = function(word){
+   return word.length 
+};
 
-let vowelBonusScorer;
+//Testing simpleScorer ++
+/* console.log(simpleScorer("manners"))
+ */
 
+let vowelBonusScorer = function(word) {
+   let score = 0;
+   const vowels = ['A', 'E', 'I', 'O', 'U'];
+   word = word.toUpperCase();
+   for (let i = 0; i < word.length; i++) {
+     if (vowels.includes(word[i])) {
+       score += 3;
+     } else {
+       score += 1;
+     }
+   }
+   return score;
+ }
+ 
+//Testing vowelBonusScorer ++
+/* console.log(vowelBonusScorer(initialPrompt())); */
+
+//NEED TO FINISH
 let scrabbleScorer;
 
-const scoringAlgorithms = [];
+//Make 3 scoring algorithm objects
 
-function scorerPrompt() {}
+let scoringAlgorithm1 = {
+  name: "Simple Score",
+  description: "Each letter is worth 1 point.", 
+  scorerFunction: simpleScorer
+};
+
+let scoringAlgorithm2 = {
+  name: "Bonus Vowels",
+  description: "Vowels are 3 pts, consonants are 1 pt.",
+  scorerFunction: vowelBonusScorer
+};
+
+let scoringAlgorithm3 = {
+  name: "Scrabble",
+  description: "The traditional scoring algorithm.",
+  scorerFunction: oldScrabbleScorer
+};
+
+const scoringAlgorithms = [scoringAlgorithm1, scoringAlgorithm2, scoringAlgorithm3];
+
+//testing scoringAlgorithm ++
+/* console.log(scoringAlgorithms); */
+
+function scorerPrompt(word) {
+  let scoringChoice = Number(input.question(
+`-----------------------------------------------------
+Which scoring algorithm would you like to use?
+
+  0 - Simple: One point per character
+  1 - Vowel Bonus: Vowels are worth 3 points
+  2 - Scrabble: Uses scrabble point system
+  
+Enter 0, 1, or 2: `));
+
+  if (scoringChoice !== 0 && !scoringChoice !== 1 && scoringChoice !== 2){
+     console.log(         
+`-----------------------------------------------------
+Invalid input. Please select one of the three options.`)
+     return scorerPrompt(word);
+  }
+
+  let selectedAlgorithm = scoringAlgorithms[scoringChoice];
+  
+  let score = selectedAlgorithm.scorerFunction(word);
+ 
+ console.log(
+`-----------------------------------------------------
+Your score for '${word}': 
+${score}`);
+
+  //Test scoringAlgorithms[(scoringChoice) gives a value. ++
+  /* console.log(scoringAlgorithms[(scoringChoice)]) */ 
+
+  //returns "undefined." Don't know why because the console log above prints the object
+  return scoringAlgorithms[(scoringChoice)];
+}
+
+//Testing scorerPrompt +
+/* console.log(scorerPrompt()) */
 
 function transform() {};
 
 function runProgram() {
-   initialPrompt();
-   
+  let word = initialPrompt();
+  scorerPrompt(word);
 }
+
+//Testing runProgram ++
+/* console.log(runProgram()); */
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
