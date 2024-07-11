@@ -126,7 +126,7 @@ Which scoring algorithm would you like to use?
   
 Enter 0, 1, or 2: `));
 
-  if (scoringChoice !== 0 && !scoringChoice !== 1 && scoringChoice !== 2){
+  if (scoringChoice !== 0 && scoringChoice !== 1 && scoringChoice !== 2){
      console.log(         
 `-----------------------------------------------------
 Invalid input. Please select one of the three options.`)
@@ -207,7 +207,7 @@ function runProgram() {
 }
 
 //Testing runProgram ++
-/* console.log(runProgram()); */
+console.log(runProgram());
 
 // Don't write any code below this line //
 // And don't change these or your program will not run as expected //
