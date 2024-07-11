@@ -87,8 +87,8 @@ function scrabbleScorer(word) {
   return letterPoints;
 }
 
-//testing scrabbleScorer
-console.log(scrabbleScorer("Manatee"));
+//testing scrabbleScorer ++
+/* console.log(scrabbleScorer("Manatee")); */
 
 //Make 3 scoring algorithm objects
 
