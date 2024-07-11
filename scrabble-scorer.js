@@ -23,7 +23,6 @@ function oldScrabbleScorer(word) {
 		 if (oldPointStructure[pointValue].includes(word[i])) {
 			letterPoints += `Points for '${word[i]}': ${pointValue}\n`
 		 }
- 
 	  }
 	}
 	return letterPoints;
@@ -41,7 +40,10 @@ function initialPrompt() {
 //Testing oldScrabbleScorer ++
 /* console.log(oldScrabbleScorer(initialPrompt())) */
 
-let newPointStructure;
+let newPointStructure = transform(oldPointStructure);
+
+//testing newPointStructure ++
+/* console.log(newPointStructure); */
 
 let simpleScorer = function(word){
    return word.length 
@@ -69,7 +71,24 @@ let vowelBonusScorer = function(word) {
 /* console.log(vowelBonusScorer(initialPrompt())); */
 
 //NEED TO FINISH
-let scrabbleScorer;
+/* let scrabbleScorer; */
+
+//WORK IN PROGRESS 
+//object = newPointStructure.pointValue => A : 1
+
+function scrabbleScorer(word) {
+  word = word.toLowerCase();
+  let letterPoints = 0;
+ 
+  for (let i = 0; i < word.length; i++) {
+    let letter = word[i];
+      letterPoints += newPointStructure[letter];
+  }
+  return letterPoints;
+}
+
+//testing scrabbleScorer
+console.log(scrabbleScorer("Manatee"));
 
 //Make 3 scoring algorithm objects
 
@@ -87,8 +106,8 @@ let scoringAlgorithm2 = {
 
 let scoringAlgorithm3 = {
   name: "Scrabble",
-  description: "The traditional scoring algorithm.",
-  scorerFunction: oldScrabbleScorer
+  description: "The new and improved scoring algorithm.",
+  scorerFunction: scrabbleScorer
 };
 
 const scoringAlgorithms = [scoringAlgorithm1, scoringAlgorithm2, scoringAlgorithm3];
@@ -123,17 +142,64 @@ Invalid input. Please select one of the three options.`)
 Your score for '${word}': 
 ${score}`);
 
-  //Test scoringAlgorithms[(scoringChoice) gives a value. ++
-  /* console.log(scoringAlgorithms[(scoringChoice)]) */ 
+//Test scoringAlgorithms[(scoringChoice) gives a value. ++
+/* console.log(scoringAlgorithms[(scoringChoice)]) */ 
 
-  //returns "undefined." Don't know why because the console log above prints the object
+//returns "undefined." Don't know why because the console log above prints the object
   return scoringAlgorithms[(scoringChoice)];
 }
 
 //Testing scorerPrompt +
 /* console.log(scorerPrompt()) */
 
-function transform() {};
+//TO DO: Make Function to take an object and make array of key value pairs ( [[A, 1], [E , 1]...])
+
+function makeArrayofKeyValuePairs(object){
+  let letter;
+  let points;
+  let keyValuePair;
+  let arrayOfkeyValuePairs = [];
+
+  for (pointValues in object){
+     for (i = 0; i < object[pointValues].length; i++){
+        points = Number(pointValues);
+        letter = object[pointValues][i].toLowerCase();
+        keyValuePair = [letter, points];
+        arrayOfkeyValuePairs.push(keyValuePair);
+     }
+  }
+  return arrayOfkeyValuePairs;
+}
+
+//testing makeArrayofKeyValuePairs ++
+/* console.log(makeArrayofKeyValuePairs(oldPointStructure)); */
+
+//Take an array of Key/Value pairs and turn it into an object with [0] being "Key" and [1] being "value"
+
+//TEST
+let testarr = [
+  [ 'A', 1 ],  [ 'E', 2 ],
+  [ 'I', 3 ],]
+
+
+function createNewObject(arr){
+  let object = {};
+  for (i = 0; i < arr.length; i++){
+     object[arr[i][0]] = arr[i][1]
+  }
+  return object;
+}
+
+//Testing createNewObject ++
+/* console.log(createNewObject(testarr)); */
+
+function transform(object) {
+  let arr = makeArrayofKeyValuePairs(object);
+  return createNewObject(arr);
+};
+
+//Test transform function ++
+/* console.log(transform(oldPointStructure)) */
 
 function runProgram() {
   let word = initialPrompt();
